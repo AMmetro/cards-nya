@@ -1,18 +1,18 @@
 import React from 'react';
-import logo from '../../logo.svg';
-import './App.css';
+import Header from './header/Header';
+import {HashRouter} from "react-router-dom";
+import Routes from "./routes/Routes";
+import './App.css'
 
-const App =()=> {
+function App() {
 
-    return (
+  return (
     <div className="App">
-      {/*//hr,prov*/}
-<>
-  {/*<Header>*/}
-  {/*<Main>*/}
 
-
-</>
+        <HashRouter>
+          <Header/>
+          <Routes/>
+        </HashRouter>
     </div>
   );
 }
