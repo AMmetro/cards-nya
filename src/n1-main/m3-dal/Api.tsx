@@ -23,4 +23,3 @@ export type LoggedInType = {
 type CombinedActionType = LoggedInType
 
 export const loggedInAC = (value : boolean): LoggedInType => ({ type : "IS-LOGGED-IN", value });
-
