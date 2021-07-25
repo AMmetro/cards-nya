@@ -1,32 +1,26 @@
-import axios from 'axios'
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'dfa3df07-6fe1-42ec-85cb-0092d073f5e2'
+
+const initState = {
+    isLoggedIn : false
+};
+
+export type InitialStateType  = typeof initState
+
+export const authReducer = (state = initState, action: CombinedActionType): InitialStateType => { // fix any
+    switch (action.type) {
+        case "IS-LOGGED-IN": {
+            return {...state, isLoggedIn: action.value};
+        }
+        default: return state;
     }
+};
+
+export type LoggedInType = {
+    type : 'IS-LOGGED-IN'
+    value : boolean
 }
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    ...settings
-})
 
-// api
-export const todolistsAPI = {
-    getTodolists() {
-        const promise = instance.get<any>('todo-lists');
-        return promise;
-    },
-    createTodolist(title: string) {
-        const promise = instance.post<any>('todo-lists', {title: title});
-        return promise;
-    }
-}
- captcha: true
-// }
+type CombinedActionType = LoggedInType
 
-
-
-
-
+export const loggedInAC = (value : boolean): LoggedInType => ({ type : "IS-LOGGED-IN", value });
 
