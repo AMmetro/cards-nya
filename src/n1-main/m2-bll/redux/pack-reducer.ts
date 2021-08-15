@@ -1,10 +1,12 @@
 import {
     acsessAPI,
-    GetPackQueryParamsType, NewPackFieldsType, NewPackObjectDataType,
-    PackDataType, PackResponseDataType, PackUpdateFieldsType,
+    GetPackQueryParamsType,
+    GetPackResponseWithDateType, NewPackFieldsType, NewPackObjectDataType,
+    PackDataType,
+    PackResponseDataType, PackUpdateFieldsType, PackUpdateObjectType
 } from "../../m3-dal/Api";
 import {setAppErrorAC, setAppStatusAC, setMessageErrorAC} from "./app-reducer";
-import {AnyAction} from "redux";
+import {AnyAction, Dispatch} from "redux";
 import {ThunkDispatch} from "redux-thunk";
 import {AppStoreType} from "./store";
 
@@ -52,7 +54,7 @@ const initialPackState: InitialPackStateType = {
     min: null,
     max: null,
     isSortTypeAscending: false,
-    sortField: "name",
+    sortField: "updated",
     user_id: null,
     // current page
     page: 0,
@@ -67,8 +69,9 @@ export const packReducer = (state: InitialPackStateType = initialPackState, acti
     /*console.log('action type', action.type)*/
     /*console.log('action payload', action.payload)*/
     switch (action.type) {
+
         case ACTIONS_TYPE.SET_CARDS_PACK:
-            // debugger
+            /*debugger*/
             return {
                 ...state,
                 cardPacks: [],
@@ -82,7 +85,9 @@ export const packReducer = (state: InitialPackStateType = initialPackState, acti
         case ACTIONS_TYPE.SET_PACK_USER_ID:
         case ACTIONS_TYPE.SET_PACK_SORT_TYPE:
         case ACTIONS_TYPE.SET_PACK_TOTAL_COUNT:
+
             return {
+
                 ...state,
                 ...action.payload,
             }
@@ -179,8 +184,7 @@ export const getAllPack = () => {
             min, max, user_id, sortField,
             isSortTypeAscending,
         } = getState().pack;
-                            debugger
-        let sortPacks
+              let sortPacks
         // if sortField set create sortPacks field '0created' '1updated'
         if (sortField) {
             sortPacks = +isSortTypeAscending + sortField;
@@ -204,9 +208,8 @@ export const getAllPack = () => {
                 } else {
                     dispatch(setCardsPackAC([]))
                 }
-
-                // dispatch(setMaxCardsCountAC(res.data.maxCardsCount))
-                // dispatch(setMinCardsCountAC(res.data.minCardsCount))
+                /*dispatch(setMaxCardsCountAC(res.data.maxCardsCount))
+                dispatch(setMinCardsCountAC(res.data.minCardsCount))*/
                 dispatch(setPageAC(res.data.page))
                 dispatch(setPageCountAC(res.data.pageCount))
                 dispatch(setCardsPackTotalCountAC(res.data.cardPacksTotalCount))
@@ -215,18 +218,6 @@ export const getAllPack = () => {
             .catch(error => {
                 dispatch(setAppStatusAC('failed'))
                 dispatch(setMessageErrorAC('Something went wrong'))
-                /*if (error.response && error.response.status) {
-                    dispatch(setMessageErrorAC(error.response.data.error))
-                } else {
-                    dispatch(setMessageErrorAC("Something went wrong"))
-                    dispatch(setPassRequestAC(false))
-                    if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                }*/
-
             })
     }
 }
@@ -269,7 +260,10 @@ export const addNewPackTC = (addNewPackObject: NewPackFieldsType) => {
 export const updateCardPack = (packId: string, packUpdateObject: PackUpdateFieldsType) => {
     return (dispatch: ThunkDispatch<AppStoreType, {}, AnyAction>) => {
         const updatePackQueryObject = {
-            cardsPack: packUpdateObject
+            cardsPack: {
+                _id : packId,
+                ...packUpdateObject
+            }
         }
         dispatch(setAppStatusAC('loading'))
         acsessAPI.updateCardPacks(updatePackQueryObject)
