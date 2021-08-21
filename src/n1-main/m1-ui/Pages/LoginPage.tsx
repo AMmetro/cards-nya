@@ -67,13 +67,10 @@ const LoginPage: React.FC = () => {
         },
     })
 
-    const history = useHistory();
-
+    /*const history = useHistory();*/
 
     if (isLoggedIn) {
         return <Redirect to={'/'}/>
-        // history.push( '/pack' );
-        // history.goBack();
     }
 
     return <Grid

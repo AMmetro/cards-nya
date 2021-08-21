@@ -5,7 +5,7 @@ const settings = {
 };
 const instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
-    /*baseURL: 'https://neko-back.herokuapp.com/2.0/',*/
+    // baseURL: 'https://neko-back.herokuapp.com/2.0/',
     ...settings
 })
 
@@ -142,7 +142,8 @@ export type UserProfileType = {
     verified: boolean,
     rememberMe: boolean,
     error: string,
-    isLoggedIn:boolean
+    isLoggedIn:boolean,
+    isFetching:boolean
 }
 
 export type UserLoginType = {
