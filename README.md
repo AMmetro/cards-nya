@@ -43,3 +43,4 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 05-Aug - add Pack component
 10-Aug - update Pack reducer
 15-Aug - add redirect from Pack 
+22-Aug - add work with file 
